@@ -1,26 +1,13 @@
 import { ShoppingCart, Heart } from 'lucide-react';
-import { useState } from 'react';
-import { useCart } from '../context/CartContext';
 
 interface ProductCardProps {
-  id: number;
   name: string;
   price: number;
   image: string;
   category: string;
 }
 
-export default function ProductCard({ id, name, price, image, category }: ProductCardProps) {
-  const [isAdded, setIsAdded] = useState(false);
-  const { addItem } = useCart();
-
-  const handleAddToCart = (e: React.MouseEvent) => {
-    e.preventDefault();
-    addItem({ id, name, price, image });
-    setIsAdded(true);
-    setTimeout(() => setIsAdded(false), 2000);
-  };
-
+export default function ProductCard({ name, price, image, category }: ProductCardProps) {
   return (
     <div className="group relative bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-2">
       <div className="relative aspect-square overflow-hidden">
@@ -36,16 +23,9 @@ export default function ProductCard({ id, name, price, image, category }: Produc
         </button>
 
         <div className="absolute bottom-4 left-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-          <button
-            onClick={handleAddToCart}
-            className={`w-full px-4 py-3 rounded-full font-semibold flex items-center justify-center space-x-2 transition-all duration-300 ${
-              isAdded
-                ? 'bg-green-500 text-white'
-                : 'bg-white text-gray-900 hover:bg-rose-500 hover:text-white'
-            }`}
-          >
+          <button className="w-full px-4 py-3 bg-white text-gray-900 rounded-full font-semibold flex items-center justify-center space-x-2 hover:bg-rose-500 hover:text-white transition-all duration-300">
             <ShoppingCart className="w-5 h-5" />
-            <span>{isAdded ? 'Добавлено!' : 'В корзину'}</span>
+            <span>В корзину</span>
           </button>
         </div>
       </div>
@@ -62,7 +42,7 @@ export default function ProductCard({ id, name, price, image, category }: Produc
         </h3>
 
         <div className="flex items-center justify-between">
-          <span className="text-2xl font-bold text-gray-900">{price.toLocaleString('ru-RU')} ₽</span>
+          <span className="text-2xl font-bold text-gray-900">{price} ₽</span>
           <div className="flex items-center space-x-1 text-yellow-500">
             <span>⭐</span>
             <span className="text-sm font-semibold text-gray-700">4.8</span>
